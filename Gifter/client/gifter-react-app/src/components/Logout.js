@@ -1,7 +1,7 @@
 import { useNavigate } from "react-router-dom"
 import React, { useContext, useEffect, useState,useRef } from "react";
 import { UserContext } from "../providers/UserProvider";
-
+//
 export const Logout = (props) =>{
     const navigate = useNavigate()
     const { logout } = useContext(UserContext);
