@@ -14,8 +14,8 @@ export const Login = () => {
     e.preventDefault();
     login({ email, password });
 
-    navigate("/home");
-    window.location.reload(true);
+    // navigate("/");
+    // window.location.reload(true);
                 
                 // window.location.reload(false); 
   };

@@ -5,6 +5,7 @@ export const UserContext = React.createContext();
 //
 export const UserProvider = (props) => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
+//limiting the user what to see
 
   const getCurrentUser = () => {
     const currentUser = localStorage.getItem("gifterUser");
@@ -18,12 +19,15 @@ export const UserProvider = (props) => {
     debugger;
     fetch(`api/userprofile/getbyemail?email=${userObject.email}`)
       .then((r) => r.json())
-      .then((userObjFromDB) => {
-        if (userObjFromDB.status === 404 ){
-            navigate("/register");
-        } else{
-        localStorage.setItem("gifterUser", JSON.stringify(userObjFromDB));
+      .then((userObjFromDB) => { localStorage.setItem("gifterUser", JSON.stringify(userObjFromDB));
+        debugger
+        if (!userObjFromDB.status){
+        debugger   
         setIsLoggedIn(true);
+        
+        } else{
+          debugger
+        setIsLoggedIn(false);
         ;
       }})
   };
@@ -39,7 +43,7 @@ export const UserProvider = (props) => {
       .then((response) => response.json())
       .then((userObject) => {
         localStorage.setItem("gifterUser", JSON.stringify(userObject));
-      });
+        setIsLoggedIn(true);});
   };
 
   const logout = () => {

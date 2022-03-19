@@ -1,34 +1,46 @@
-import React, { useEffect, useContext, useState } from "react";
-import { Route, Routes } from "react-router-dom";
+import React, { useContext} from "react";
+import { Route, Routes, Navigate } from "react-router-dom";
 import PostList from "./PostList";
 import PostForm from "./PostForm";
-import { PostProvider } from "../providers/PostProvider";
 import PostDetails from "./PostDetails";
 import UserPosts from "./UserPosts";
-import { UserProfileProvider } from "../providers/UserProfileProvider";
-import { UserProvider } from "../providers/UserProvider";
+import {  UserProfileProvider } from "../providers/UserProfileProvider";
 import { Login } from "./Login";
 import { Logout } from "./Logout";
+import { UserContext } from "../providers/UserProvider";
+import { Register } from "./Register";
 
 const ApplicationViews = () => {
+  
+  const {isLoggedIn } = useContext(UserContext);
 
+    if (!isLoggedIn){
 
   return (
-      <PostProvider>
-        <UserProvider>
+
         <Routes>
-                <Route path="/home"  element={<PostList />}/>
-                <Route path="/"  element={<PostList />}/>
-                <Route path="/posts/add"  element={<PostForm />}/>
-                <Route path="/posts/:id"  element={<PostDetails />}/>
-                <Route path="/users/:id" element={<UserProfileProvider><UserPosts /></UserProfileProvider>} />
-                {/* <Route path ="login" element={<Login/>}/> */}
-                <Route path ="logout" element={<Logout/>}/>
+
+            <Route path ="login" element={<Login/>}/>
+            <Route path="register" element={<Register />} />
+            <Route path="*" element={<Navigate to="/login" />}/>
+            {/* anyother route goes to login */}
 
         </Routes>
-        </UserProvider>
-      </PostProvider>
+      
   );
+  } else {
+    return (
+        <Routes>
+          <Route path="/"  element={<PostList />}/>
+          <Route path="posts/add"  element={<PostForm />}/>
+          <Route path="posts/:id"  element={<PostDetails />}/>
+          <Route path="users/:id" element={<UserProfileProvider><UserPosts /></UserProfileProvider>}/>
+          <Route path="*" element={<Navigate to="/" />} />
+          <Route path ="logout" element={<Logout/>}/>
+        </Routes>
+    )
+  }
+
 };
 export default ApplicationViews;
 
