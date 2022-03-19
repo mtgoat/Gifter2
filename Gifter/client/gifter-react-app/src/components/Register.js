@@ -18,6 +18,7 @@ export const Register = () => {
     e.preventDefault();
     register({ name, email, bio, imageurl,password });
   };
+// key and value pair 
 
   return (
     <>
